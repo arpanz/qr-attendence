@@ -622,11 +622,26 @@
 
     scanner = new Html5Qrcode('reader');
 
-    // Use facingMode directly — this triggers getUserMedia which shows
-    // the browser permission prompt. getCameras() uses enumerateDevices()
-    // which does NOT prompt on mobile, causing silent "permission denied".
+    // Manually trigger the prompt first to guarantee mobile browsers ask for permission
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(stream => {
+          // Immediately stop this initial stream, then hand over to html5-qrcode
+          stream.getTracks().forEach(track => track.stop());
+          startHtml5Qrcode(config);
+        })
+        .catch(err => {
+          handleCameraError(err);
+        });
+    } else {
+      // Fallback
+      startHtml5Qrcode(config);
+    }
+  }
+
+  function startHtml5Qrcode(config) {
     scanner.start(
-      { facingMode: 'environment' },   // back camera; falls back to front if unavailable
+      { facingMode: 'environment' },
       config,
       onScanSuccess,
       onScanError
@@ -636,14 +651,18 @@
       setScanningUI(true);
     })
     .catch(err => {
-      console.error('Camera start error:', err);
-      const msg = err && err.message
-        ? (err.message.toLowerCase().includes('ermission')
-            ? 'Camera permission denied — please allow camera access in your browser settings'
-            : err.message)
-        : 'Could not access camera';
-      showFeedback('error', 'Camera Error', msg, null);
+      handleCameraError(err);
     });
+  }
+
+  function handleCameraError(err) {
+    console.error('Camera start error:', err);
+    const msg = err && err.message
+      ? (err.message.toLowerCase().includes('ermission') || err.message.toLowerCase().includes('denied')
+          ? 'Camera permission denied — please allow camera access in your browser or reload the page to prompt again.'
+          : err.message)
+      : 'Could not access camera';
+    showFeedback('error', 'Camera Error', msg, null);
   }
 
   function stopScanner() {

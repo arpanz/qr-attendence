@@ -8,10 +8,10 @@ A QR-powered Digital ID and Entry Logging System built with **Google Apps Script
 
 | | Link |
 |---|---|
-| 📄 Apps Script Project | _[Paste Apps Script share link here]_ |
-| 🌐 Web App (Scanner) | _[Paste /exec deployment URL here]_ |
-| 📊 Google Sheet | _[Paste Google Sheet URL here]_ |
-| 📁 Drive Folder (QR Codes) | _[Paste Drive folder URL here]_ |
+| 📄 Apps Script Project | [View Project](https://script.google.com/home/projects) |
+| 🌐 Web App (Scanner) | [Open Scanner](https://script.google.com/macros/s/AKfycbxeq8tZuXUnAWNA7vMTBvLsrf-ZbvHoKCEPyM5T7eDD9I3a2IFPV5Fj0GWGosntqR8z/exec) |
+| 📊 Google Sheet | [Open Sheet](https://docs.google.com/spreadsheets/d/1Kv2Ze97Iu8DpRnmdDiaV9tfL2mimzrpIwkYNNp_qfoM/edit) |
+| 📁 Drive Folder (QR Codes) | [Open Folder](https://drive.google.com/drive/folders/13nwdPs214b4bkBLh4wFj1uJh_zLLmOv-) |
 
 ---
 
@@ -60,19 +60,56 @@ A QR-powered Digital ID and Entry Logging System built with **Google Apps Script
 
 Each user gets a uniquely named QR image stored in Drive following the `QR_{UserID}_{Name}.png` naming convention.
 
-![QR Codes in Google Drive](screenshots/drive-qr-codes.jpg)
+![QR Codes in Google Drive](screenshots/drive-qr-codes.png)
 
 ### Google Sheets — Users Database
 
 The Users sheet stores UserID, Name, Email, and a shareable Drive link to each user's QR code — auto-populated by `generateQRCodes()`.
 
-![Users Sheet](screenshots/sheet-users.jpg)
+![Users Sheet](screenshots/sheet-users.png)
 
 ### Google Sheets — Attendance Logs
 
 Every scan is logged with UserID, Name, ISO timestamp, and IN/OUT status. The system auto-toggles: first scan = IN, next scan = OUT.
 
-![Attendance Logs Sheet](screenshots/sheet-logs.jpg)
+![Attendance Logs Sheet](screenshots/sheet-logs.png)
+
+### Sample User QR Code
+
+This is a real generated QR for **USR_001 — Riya Sharma**. It encodes an HMAC-signed JSON payload. Scan it with the web app to test IN/OUT logging live.
+
+![Sample QR Code - Riya Sharma](screenshots/sample-qr.png)
+
+---
+
+## Testing the QR Code
+
+You can test the system right now using the sample QR above:
+
+### Step 1 — Open the Scanner
+Go to: **[https://script.google.com/macros/s/AKfycbxeq8tZuXUnAWNA7vMTBvLsrf-ZbvHoKCEPyM5T7eDD9I3a2IFPV5Fj0GWGosntqR8z/exec](https://script.google.com/macros/s/AKfycbxeq8tZuXUnAWNA7vMTBvLsrf-ZbvHoKCEPyM5T7eDD9I3a2IFPV5Fj0GWGosntqR8z/exec)**
+
+Open this on your **phone** (or any device with a camera).
+
+### Step 2 — Start Scanning
+Tap **"Start Scanner"** — a popup will appear requesting camera access. Allow it.
+
+### Step 3 — Point at the QR
+Hold your camera up to the **Sample User QR Code** image above (on another screen or printed out). The scanner will decode it automatically.
+
+### Step 4 — Watch the Result
+- **First scan** → green banner: `✅ Riya Sharma — CHECKED IN`
+- **Scan again** → amber banner: `🔄 Riya Sharma — CHECKED OUT`
+- The popup closes automatically after each successful scan
+
+### Step 5 — Verify in Google Sheets
+Open the **[Logs sheet](https://docs.google.com/spreadsheets/d/1Kv2Ze97Iu8DpRnmdDiaV9tfL2mimzrpIwkYNNp_qfoM/edit)** and check that a new row appeared with:
+- UserID: `USR_001`
+- Name: `Riya Sharma`
+- Timestamp: current UTC time
+- Status: `IN` (or `OUT` on second scan)
+
+> **Note:** The QR encodes `{"id":"USR_001","sig":"..."}` with an HMAC-SHA256 signature. Trying to scan a plain text QR with just `USR_001` will fail validation — the system will show a pink error banner.
 
 ---
 

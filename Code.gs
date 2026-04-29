@@ -31,6 +31,10 @@ function doGet(e) {
   return HtmlService
     .createHtmlOutputFromFile('index')
     .setTitle('QR Attendance Scanner')
+    // IFRAME mode is required — it lifts the legacy Caja sandbox
+    // restrictions that block external CDN scripts (html5-qrcode)
+    // and getUserMedia (camera access).
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
@@ -177,7 +181,7 @@ function generateQRCodes() {
     // Build signed payload
     var payload = JSON.stringify({ id: userId, sig: computeHmac(userId) });
 
-    // QR API URL (200×200 PNG, high error correction)
+    // QR API URL (300×300 PNG, high error correction)
     var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?'
       + 'data='   + encodeURIComponent(payload)
       + '&size=300x300'
@@ -226,12 +230,10 @@ function setupSheets() {
     users = ss.insertSheet(SHEET_USERS);
     users.appendRow(['UserID', 'Name', 'Email', 'QR_Link']);
     users.setFrozenRows(1);
-    // Style header
     users.getRange(1, 1, 1, 4)
       .setBackground('#01696f')
       .setFontColor('#ffffff')
       .setFontWeight('bold');
-    // Column widths
     users.setColumnWidth(1, 120);
     users.setColumnWidth(2, 160);
     users.setColumnWidth(3, 200);
@@ -290,7 +292,6 @@ function computeHmac(userId) {
     HMAC_SECRET,
     Utilities.Charset.UTF_8
   );
-  // Convert byte array to hex string
   return rawBytes.map(function(b) {
     return ('0' + (b & 0xff).toString(16)).slice(-2);
   }).join('');

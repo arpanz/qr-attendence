@@ -8,7 +8,7 @@ A QR-powered Digital ID and Entry Logging System built with **Google Apps Script
 
 | | Link |
 |---|---|
-| 📄 Apps Script Project | [View Project](https://script.google.com/home/projects) |
+| 📄 Apps Script Project | [View Project](https://script.google.com/home/projects/1I2GrP7Ps_PAsny80bnFm84dVfXNHDflMxIc42jboK1ePkasRV48sfovJ) |
 | 🌐 Web App (Scanner) | [Open Scanner](https://script.google.com/macros/s/AKfycbxeq8tZuXUnAWNA7vMTBvLsrf-ZbvHoKCEPyM5T7eDD9I3a2IFPV5Fj0GWGosntqR8z/exec) |
 | 📊 Google Sheet | [Open Sheet](https://docs.google.com/spreadsheets/d/1Kv2Ze97Iu8DpRnmdDiaV9tfL2mimzrpIwkYNNp_qfoM/edit) |
 | 📁 Drive Folder (QR Codes) | [Open Folder](https://drive.google.com/drive/folders/13nwdPs214b4bkBLh4wFj1uJh_zLLmOv-) |

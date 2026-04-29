@@ -273,7 +273,6 @@
       border: none !important;
     }
 
-    /* Override html5-qrcode default ugly styles */
     #reader>* {
       border: none !important;
     }
@@ -315,58 +314,17 @@
       border-style: solid;
     }
 
-    .corner-tl {
-      top: 20px;
-      left: 20px;
-      border-width: 3px 0 0 3px;
-      border-radius: 4px 0 0 0;
-    }
+    .corner-tl { top: 20px; left: 20px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+    .corner-tr { top: 20px; right: 20px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+    .corner-bl { bottom: 20px; left: 20px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+    .corner-br { bottom: 20px; right: 20px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
 
-    .corner-tr {
-      top: 20px;
-      right: 20px;
-      border-width: 3px 3px 0 0;
-      border-radius: 0 4px 0 0;
-    }
-
-    .corner-bl {
-      bottom: 20px;
-      left: 20px;
-      border-width: 0 0 3px 3px;
-      border-radius: 0 0 0 4px;
-    }
-
-    .corner-br {
-      bottom: 20px;
-      right: 20px;
-      border-width: 0 3px 3px 0;
-      border-radius: 0 0 4px 0;
-    }
-
-    /* Scan line animation */
     @keyframes scanline {
-      0% {
-        top: 10%;
-        opacity: 1;
-      }
-
-      45% {
-        opacity: 1;
-      }
-
-      50% {
-        top: 90%;
-        opacity: 0.6;
-      }
-
-      55% {
-        opacity: 1;
-      }
-
-      100% {
-        top: 10%;
-        opacity: 1;
-      }
+      0%   { top: 10%; opacity: 1; }
+      45%  { opacity: 1; }
+      50%  { top: 90%; opacity: 0.6; }
+      55%  { opacity: 1; }
+      100% { top: 10%; opacity: 1; }
     }
 
     .scan-line {
@@ -383,11 +341,8 @@
       transition: opacity var(--transition);
     }
 
-    .scan-line.visible {
-      opacity: 1;
-    }
+    .scan-line.visible { opacity: 1; }
 
-    /* Idle placeholder */
     .viewfinder-idle {
       position: absolute;
       inset: 0;
@@ -401,14 +356,9 @@
       transition: opacity var(--transition);
     }
 
-    .viewfinder-idle.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+    .viewfinder-idle.hidden { opacity: 0; pointer-events: none; }
 
-    .idle-icon {
-      color: var(--text-faint);
-    }
+    .idle-icon { color: var(--text-faint); }
 
     .idle-text {
       font-size: var(--text-sm);
@@ -438,39 +388,15 @@
       transition: background var(--transition), color var(--transition), opacity var(--transition), box-shadow var(--transition);
     }
 
-    .btn:active {
-      transform: scale(0.97);
-    }
+    .btn:active { transform: scale(0.97); }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:disabled { opacity: 0.45; pointer-events: none; }
 
-    .btn-primary:hover {
-      background: var(--primary-hover);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.45;
-      pointer-events: none;
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-
-    .btn-ghost:hover {
-      background: var(--surface-2);
-      color: var(--text);
-    }
-
-    .btn-ghost:disabled {
-      opacity: 0.45;
-      pointer-events: none;
-    }
+    .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+    .btn-ghost:disabled { opacity: 0.45; pointer-events: none; }
 
     /* ─── Feedback Banner ────────────────────────────────────── */
     .feedback {
@@ -480,11 +406,7 @@
       transition: opacity var(--transition), transform var(--transition);
     }
 
-    .feedback.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(8px);
-    }
+    .feedback.hidden { opacity: 0; pointer-events: none; transform: translateY(8px); }
 
     .feedback-inner {
       display: flex;
@@ -504,10 +426,7 @@
       margin-top: 2px;
     }
 
-    .feedback-body {
-      flex: 1;
-      min-width: 0;
-    }
+    .feedback-body { flex: 1; min-width: 0; }
 
     .feedback-label {
       font-size: var(--text-xs);
@@ -524,59 +443,22 @@
       margin-bottom: var(--space-1);
     }
 
-    .feedback-meta {
-      font-size: var(--text-xs);
-      color: var(--text-muted);
-    }
+    .feedback-meta { font-size: var(--text-xs); color: var(--text-muted); }
 
-    /* States */
-    .feedback.state-in {
-      background: var(--success-hl);
-    }
+    .feedback.state-in    { background: var(--success-hl); }
+    .feedback.state-out   { background: var(--warning-hl); }
+    .feedback.state-error { background: var(--error-hl); }
+    .feedback.state-info  { background: var(--primary-hl); }
 
-    .feedback.state-out {
-      background: var(--warning-hl);
-    }
+    .feedback.state-in    .feedback-label { color: var(--success); }
+    .feedback.state-out   .feedback-label { color: var(--warning); }
+    .feedback.state-error .feedback-label { color: var(--error); }
+    .feedback.state-info  .feedback-label { color: var(--primary); }
 
-    .feedback.state-error {
-      background: var(--error-hl);
-    }
-
-    .feedback.state-info {
-      background: var(--primary-hl);
-    }
-
-    .feedback.state-in .feedback-label {
-      color: var(--success);
-    }
-
-    .feedback.state-out .feedback-label {
-      color: var(--warning);
-    }
-
-    .feedback.state-error .feedback-label {
-      color: var(--error);
-    }
-
-    .feedback.state-info .feedback-label {
-      color: var(--primary);
-    }
-
-    .feedback.state-in .feedback-icon-wrap {
-      background: var(--success);
-    }
-
-    .feedback.state-out .feedback-icon-wrap {
-      background: var(--warning);
-    }
-
-    .feedback.state-error .feedback-icon-wrap {
-      background: var(--error);
-    }
-
-    .feedback.state-info .feedback-icon-wrap {
-      background: var(--primary);
-    }
+    .feedback.state-in    .feedback-icon-wrap { background: var(--success); }
+    .feedback.state-out   .feedback-icon-wrap { background: var(--warning); }
+    .feedback.state-error .feedback-icon-wrap { background: var(--error); }
+    .feedback.state-info  .feedback-icon-wrap { background: var(--primary); }
 
     /* ─── Log Table ──────────────────────────────────────────── */
     .log-card {
@@ -595,11 +477,7 @@
       justify-content: space-between;
     }
 
-    .log-title {
-      font-size: var(--text-sm);
-      font-weight: 600;
-      color: var(--text);
-    }
+    .log-title { font-size: var(--text-sm); font-weight: 600; color: var(--text); }
 
     .log-count {
       font-size: var(--text-xs);
@@ -617,18 +495,9 @@
       overflow-y: auto;
     }
 
-    .log-list::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .log-list::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .log-list::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 2px;
-    }
+    .log-list::-webkit-scrollbar { width: 4px; }
+    .log-list::-webkit-scrollbar-track { background: transparent; }
+    .log-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     .log-item {
       display: grid;
@@ -641,20 +510,11 @@
     }
 
     @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-6px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .log-item:last-child {
-      border-bottom: none;
-    }
+    .log-item:last-child { border-bottom: none; }
 
     .log-item-name {
       font-size: var(--text-sm);
@@ -681,22 +541,10 @@
       white-space: nowrap;
     }
 
-    .badge-in {
-      background: var(--success-hl);
-      color: var(--success);
-    }
+    .badge-in    { background: var(--success-hl); color: var(--success); }
+    .badge-out   { background: var(--warning-hl); color: var(--warning); }
+    .badge-error { background: var(--error-hl);   color: var(--error); }
 
-    .badge-out {
-      background: var(--warning-hl);
-      color: var(--warning);
-    }
-
-    .badge-error {
-      background: var(--error-hl);
-      color: var(--error);
-    }
-
-    /* Empty log state */
     .log-empty {
       padding: var(--space-10) var(--space-4);
       text-align: center;
@@ -704,17 +552,10 @@
       font-size: var(--text-sm);
     }
 
-    .log-empty svg {
-      margin: 0 auto var(--space-3);
-      color: var(--text-faint);
-    }
+    .log-empty svg { margin: 0 auto var(--space-3); color: var(--text-faint); }
 
     /* ─── Loading Spinner ────────────────────────────────────── */
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .spinner {
       width: 16px;
@@ -852,14 +693,15 @@
   </div>
 
   <script>
-    /* ─── State ─────────────────────────────────────────────────── */
+    /* ─── State ───────────────────────────────────────────────── */
     let scanner = null;
     let scanning = false;
     let processing = false;
     let resumeTimer = null;
+    let scannerWindow = null;
     const COOLDOWN_MS = 3000;
 
-    /* ─── Theme Toggle ──────────────────────────────────────────── */
+    /* ─── Theme Toggle ─────────────────────────────────────────── */
     (function () {
       const root = document.documentElement;
       const btn = document.querySelector('[data-theme-toggle]');
@@ -876,41 +718,38 @@
       });
     })();
 
-    /* ─── Scanner ───────────────────────────────────────────────── */
-    // Google Apps Script serves this page inside a sandboxed iframe
-    // on googleusercontent.com WITHOUT allow="camera".  The browser
-    // will ALWAYS block getUserMedia() inside this iframe — no prompt
-    // is shown.  The workaround: open a lightweight scanner page in
-    // a NEW popup window (top-level context) that CAN access the
-    // camera.  Scanned results are sent back via postMessage.
-
-    let scannerWindow = null;
-
-    // Listen for scanned QR results coming from the popup
+    /* ─── postMessage listener ─────────────────────────────────── */
     window.addEventListener('message', function (e) {
-      // Accept messages only from our scanner popup
       if (!e.data || e.data.type !== 'qr-scan-result') return;
       const qrData = e.data.payload;
       if (qrData && !processing) {
         processing = true;
+
+        // Close the popup immediately — one scan, one log entry.
+        // This prevents the camera from re-reading the same QR and
+        // firing a second postMessage that would flip IN→OUT.
+        if (scannerWindow && !scannerWindow.closed) {
+          scannerWindow.close();
+        }
+        scanning = false;
+        setScanningUI(false);
+
         showFeedback('info', 'Processing…', 'Validating QR code with server', null, true);
         sendToBackend(qrData);
       }
     });
 
+    /* ─── Scanner ───────────────────────────────────────────────── */
     function startScanner() {
       if (scanning) return;
 
-      // Try inline camera first (works on desktop / non-GAS contexts)
       const isIframe = (() => { try { return window !== window.top; } catch (_) { return true; } })();
 
       if (!isIframe) {
-        // Not inside an iframe — use inline scanner directly
         startInlineScanner();
         return;
       }
 
-      // Inside GAS iframe — open scanner in a popup window
       openScannerPopup();
     }
 
@@ -921,7 +760,6 @@
         .then(() => { scanning = true; setScanningUI(true); })
         .catch(err => {
           console.error('Inline camera error:', err);
-          // Fallback to popup even on desktop if inline fails
           openScannerPopup();
         });
     }
@@ -931,7 +769,6 @@
       setScanningUI(true);
       showFeedback('info', 'Scanner Opening…', 'A camera window will open — allow camera access there', null, true);
 
-      // Build a self-contained HTML page for the popup
       const popupHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -942,20 +779,21 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#111;color:#eee;
-  display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:16px}
-h2{font-size:1.1rem;margin-bottom:12px;text-align:center;opacity:.85}
+  display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:16px;gap:12px}
+h2{font-size:1.1rem;text-align:center;opacity:.85}
 #qr-reader{width:100%;max-width:400px;border-radius:12px;overflow:hidden}
 #qr-reader video{object-fit:cover!important}
 #qr-reader__dashboard{background:#222!important;border:none!important;padding:8px!important}
 #qr-reader__dashboard button{background:#01696f!important;color:#fff!important;
   border:none!important;border-radius:8px!important;padding:10px 16px!important;
   font-size:.9rem!important;font-weight:600!important;cursor:pointer!important}
-.status{margin-top:16px;padding:12px 20px;border-radius:10px;text-align:center;
+.status{padding:12px 20px;border-radius:10px;text-align:center;
   font-size:.9rem;max-width:400px;width:100%;min-height:44px}
 .status.ok{background:#1b3a1b;color:#6daa45}
 .status.err{background:#3a1b2b;color:#d163a7}
 .status.wait{background:#1b2a3a;color:#4f98a3}
-.close-btn{margin-top:16px;padding:12px 32px;background:#333;color:#eee;
+.status.sent{background:#2a3a1b;color:#6daa45;font-weight:600;font-size:1rem}
+.close-btn{padding:12px 32px;background:#333;color:#eee;
   border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer}
 .close-btn:active{background:#444}
 </style>
@@ -966,34 +804,34 @@ h2{font-size:1.1rem;margin-bottom:12px;text-align:center;opacity:.85}
 <div class="status wait" id="status">Requesting camera access…</div>
 <button class="close-btn" onclick="cleanup();window.close()">✕ Close Scanner</button>
 <script>
-let lastSent='', html5Qr=null;
-function cleanup(){try{if(html5Qr)html5Qr.stop()}catch(_){}}
+let sent=false, html5Qr=null;
+function cleanup(){try{if(html5Qr)html5Qr.stop().catch(function(){});}catch(_){}}
 function init(){
   html5Qr=new Html5Qrcode('qr-reader');
   html5Qr.start(
     {facingMode:'environment'},
     {fps:10,qrbox:{width:220,height:220},aspectRatio:1.0},
     function(decoded){
-      if(decoded===lastSent)return;
-      lastSent=decoded;
-      document.getElementById('status').className='status ok';
-      document.getElementById('status').textContent='✓ Scanned! Sending…';
-      if(window.opener){
+      // Guard: only send once per popup open — prevents double-scan
+      if(sent)return;
+      sent=true;
+      // Stop scanning immediately so no second decode fires
+      cleanup();
+      document.getElementById('status').className='status sent';
+      document.getElementById('status').textContent='✓ QR Scanned! Sending to app…';
+      if(window.opener && !window.opener.closed){
         window.opener.postMessage({type:'qr-scan-result',payload:decoded},'*');
       }
-      // Allow re-scan after 3 seconds
-      setTimeout(function(){lastSent='';
-        document.getElementById('status').className='status wait';
-        document.getElementById('status').textContent='Ready — scan another QR code';
-      },3000);
+      // Auto-close after brief delay so user can see the confirmation
+      setTimeout(function(){ window.close(); }, 1200);
     },
-    function(){}
+    function(){/* suppress no-QR-in-frame noise */}
   ).then(function(){
     document.getElementById('status').className='status ok';
     document.getElementById('status').textContent='Camera ready — point at a QR code';
   }).catch(function(err){
     document.getElementById('status').className='status err';
-    document.getElementById('status').textContent='Camera error: '+(err.message||err);
+    document.getElementById('status').textContent='Camera error: '+(err&&err.message?err.message:String(err));
   });
 }
 init();
@@ -1002,7 +840,6 @@ window.addEventListener('beforeunload',cleanup);
 </body>
 </html>`;
 
-      // Open popup and write scanner HTML into it
       scannerWindow = window.open('', '_blank', 'width=420,height=620,menubar=no,toolbar=no');
       if (!scannerWindow) {
         showFeedback('error', 'Popup Blocked',
@@ -1016,26 +853,25 @@ window.addEventListener('beforeunload',cleanup);
       scannerWindow.document.write(popupHTML);
       scannerWindow.document.close();
 
-      // Monitor popup — when user closes it, reset UI
+      // Detect manual popup close (user dismisses without scanning)
       const popupCheck = setInterval(() => {
         if (scannerWindow && scannerWindow.closed) {
           clearInterval(popupCheck);
-          scanning = false;
-          setScanningUI(false);
-          showFeedback('info', 'Scanner Closed', 'Tap Start Scanner to scan again', null);
+          if (!processing) {
+            // User closed without scanning
+            scanning = false;
+            setScanningUI(false);
+            showFeedback('info', 'Scanner Closed', 'Tap Start Scanner to scan again', null);
+          }
         }
       }, 500);
     }
 
     function stopScanner() {
       clearTimeout(resumeTimer);
-      // Stop inline scanner if active
       if (scanner && scanning) {
-        scanner.stop().then(() => {
-          scanner.clear();
-        }).catch(console.error);
+        scanner.stop().then(() => scanner.clear()).catch(console.error);
       }
-      // Close popup scanner if active
       if (scannerWindow && !scannerWindow.closed) {
         scannerWindow.close();
       }
@@ -1056,7 +892,7 @@ window.addEventListener('beforeunload',cleanup);
       else line.classList.remove('visible');
     }
 
-    /* ─── QR Callbacks ──────────────────────────────────────────── */
+    /* ─── Inline scanner callbacks ──────────────────────────────── */
     function onScanSuccess(decodedText) {
       if (processing) return;
       processing = true;
@@ -1065,12 +901,7 @@ window.addEventListener('beforeunload',cleanup);
       sendToBackend(decodedText);
     }
 
-    function onScanError(err) {
-      // Suppress continuous "no QR in frame" noise from html5-qrcode
-      if (!err) return;
-      const msg = typeof err === 'string' ? err : (err.message || '');
-      if (msg.toLowerCase().includes('no qr') || msg.toLowerCase().includes('no multi')) return;
-    }
+    function onScanError() { /* suppress no-QR-in-frame noise */ }
 
     /* ─── Backend Communication ─────────────────────────────────── */
     function sendToBackend(qrData) {
@@ -1079,18 +910,17 @@ window.addEventListener('beforeunload',cleanup);
       catch (_) { payload = qrData; }
 
       if (typeof google !== 'undefined' && google.script && google.script.run) {
-        // Production: Apps Script
         google.script.run
           .withSuccessHandler(handleServerResponse)
           .withFailureHandler(handleServerError)
           .logEntry(typeof payload === 'object' ? JSON.stringify(payload) : payload);
       } else {
-        // Dev mock — works when opening the file directly in browser
+        // Dev mock
         setTimeout(() => {
           const mock = [
-            { status: 'success', name: 'Riya Sharma', action: 'IN', userId: 'USR_001', time: new Date().toISOString() },
+            { status: 'success', name: 'Riya Sharma', action: 'IN',  userId: 'USR_001', time: new Date().toISOString() },
             { status: 'success', name: 'Arjun Mehta', action: 'OUT', userId: 'USR_002', time: new Date().toISOString() },
-            { status: 'error', message: 'User not found in database' },
+            { status: 'error',   message: 'User not found in database' },
           ];
           handleServerResponse(mock[Math.floor(Math.random() * mock.length)]);
         }, 900);
@@ -1133,12 +963,12 @@ window.addEventListener('beforeunload',cleanup);
       }, COOLDOWN_MS);
     }
 
-    /* ─── Feedback Banner ────────────────────────────────────────── */
+    /* ─── Feedback Banner ───────────────────────────────────────── */
     const ICONS = {
-      in: '<polyline points="20 6 9 17 4 12"/>',
-      out: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+      in:    '<polyline points="20 6 9 17 4 12"/>',
+      out:   '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
       error: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
-      info: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+      info:  '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
     };
 
     function showFeedback(state, label, name, meta, isLoading = false) {
@@ -1167,14 +997,14 @@ window.addEventListener('beforeunload',cleanup);
       const li = document.createElement('li');
       li.className = 'log-item';
       li.innerHTML =
-        '<span class="log-item-name">' + escHtml(name) + '</span>' +
-        '<span class="log-item-time">' + escHtml(time) + '</span>' +
-        '<span class="badge badge-' + escHtml(badgeClass) + '">' + escHtml(action) + '</span>';
+        '<span class="log-item-name">'  + escHtml(name)       + '</span>' +
+        '<span class="log-item-time">'  + escHtml(time)       + '</span>' +
+        '<span class="badge badge-'     + escHtml(badgeClass) + '">' + escHtml(action) + '</span>';
       list.insertBefore(li, list.firstChild);
       while (list.children.length > 50) list.removeChild(list.lastChild);
     }
 
-    /* ─── Helpers ────────────────────────────────────────────────── */
+    /* ─── Helpers ───────────────────────────────────────────────── */
     function formatTime(iso) {
       try {
         return new Date(iso).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });

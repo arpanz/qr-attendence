@@ -487,7 +487,6 @@
   <header class="header">
     <div class="logo">
       <div class="logo-icon">
-        <!-- QR icon -->
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="3" width="7" height="7" rx="1"/>
           <rect x="14" y="3" width="7" height="7" rx="1"/>
@@ -504,7 +503,6 @@
       </div>
     </div>
     <button class="theme-btn" data-theme-toggle aria-label="Switch to light mode">
-      <!-- Moon icon (shown in dark mode) -->
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
@@ -519,10 +517,8 @@
     </div>
 
     <div class="viewfinder-wrap">
-      <!-- html5-qrcode mounts here -->
       <div id="reader"></div>
 
-      <!-- Corner guides + scan line (shown when active) -->
       <div class="corners" id="corners" style="display:none">
         <div class="corner corner-tl"></div>
         <div class="corner corner-tr"></div>
@@ -531,7 +527,6 @@
         <div class="scan-line" id="scanLine"></div>
       </div>
 
-      <!-- Idle placeholder -->
       <div class="viewfinder-idle" id="idlePlaceholder">
         <svg class="idle-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
@@ -542,7 +537,6 @@
       </div>
     </div>
 
-    <!-- Buttons -->
     <div class="controls">
       <button class="btn btn-primary" id="startBtn" onclick="startScanner()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -558,9 +552,7 @@
   <!-- Feedback Banner -->
   <div class="feedback hidden" id="feedbackBanner" role="alert" aria-live="polite">
     <div class="feedback-inner">
-      <div class="feedback-icon-wrap" id="feedbackIcon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" id="feedbackIconSvg"></svg>
-      </div>
+      <div class="feedback-icon-wrap" id="feedbackIcon"></div>
       <div class="feedback-body">
         <div class="feedback-label" id="feedbackLabel">—</div>
         <div class="feedback-name"  id="feedbackName">—</div>
@@ -593,20 +585,19 @@
 </div>
 
 <script>
-  /* ─── State ────────────────────────────────────────────────── */
-  let scanner    = null;
-  let scanning   = false;
-  let processing = false;       // debounce flag (prevent double-fire)
+  /* ─── State ─────────────────────────────────────────────────── */
+  let scanner     = null;
+  let scanning    = false;
+  let processing  = false;
   let resumeTimer = null;
-  const COOLDOWN_MS = 3000;     // ms before scanner resumes after a scan
+  const COOLDOWN_MS = 3000;
 
-  /* ─── Theme Toggle ─────────────────────────────────────────── */
+  /* ─── Theme Toggle ──────────────────────────────────────────── */
   (function () {
-    const root  = document.documentElement;
-    const btn   = document.querySelector('[data-theme-toggle]');
-    // Default: dark
-    const SUN = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-    const MOON  = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+    const root = document.documentElement;
+    const btn  = document.querySelector('[data-theme-toggle]');
+    const SUN  = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+    const MOON = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
     let theme = 'dark';
     root.setAttribute('data-theme', theme);
     btn.innerHTML = MOON;
@@ -618,7 +609,7 @@
     });
   })();
 
-  /* ─── Scanner ──────────────────────────────────────────────── */
+  /* ─── Scanner ───────────────────────────────────────────────── */
   function startScanner() {
     if (scanning) return;
 
@@ -631,32 +622,28 @@
 
     scanner = new Html5Qrcode('reader');
 
-    Html5Qrcode.getCameras()
-      .then(cameras => {
-        if (!cameras || cameras.length === 0) {
-          showFeedback('error', 'No Camera Found', 'Grant camera permission or use another device', null);
-          return;
-        }
-        // Prefer back camera on mobile
-        const cam = cameras.find(c => /back|rear|environment/i.test(c.label)) || cameras[cameras.length - 1];
-        return scanner.start(
-          { deviceId: { exact: cam.id } },
-          config,
-          onScanSuccess,
-          onScanError
-        );
-      })
-      .then(() => {
-        scanning = true;
-        setScanningUI(true);
-      })
-      .catch(err => {
-        console.error('Camera start error:', err);
-        const msg = err && err.message
-          ? (err.message.includes('Permission') ? 'Camera permission denied — please allow camera access' : err.message)
-          : 'Could not access camera';
-        showFeedback('error', 'Camera Error', msg, null);
-      });
+    // Use facingMode directly — this triggers getUserMedia which shows
+    // the browser permission prompt. getCameras() uses enumerateDevices()
+    // which does NOT prompt on mobile, causing silent "permission denied".
+    scanner.start(
+      { facingMode: 'environment' },   // back camera; falls back to front if unavailable
+      config,
+      onScanSuccess,
+      onScanError
+    )
+    .then(() => {
+      scanning = true;
+      setScanningUI(true);
+    })
+    .catch(err => {
+      console.error('Camera start error:', err);
+      const msg = err && err.message
+        ? (err.message.toLowerCase().includes('ermission')
+            ? 'Camera permission denied — please allow camera access in your browser settings'
+            : err.message)
+        : 'Could not access camera';
+      showFeedback('error', 'Camera Error', msg, null);
+    });
   }
 
   function stopScanner() {
@@ -664,65 +651,57 @@
     clearTimeout(resumeTimer);
     scanner.stop().then(() => {
       scanner.clear();
-      scanning = false;
+      scanning   = false;
       processing = false;
       setScanningUI(false);
     }).catch(console.error);
   }
 
   function setScanningUI(active) {
-    document.getElementById('startBtn').disabled  = active;
-    document.getElementById('stopBtn').disabled   = !active;
+    document.getElementById('startBtn').disabled = active;
+    document.getElementById('stopBtn').disabled  = !active;
     document.getElementById('statusDot').className = 'status-dot' + (active ? ' active' : '');
-    document.getElementById('corners').style.display   = active ? 'block' : 'none';
+    document.getElementById('corners').style.display = active ? 'block' : 'none';
     document.getElementById('idlePlaceholder').className = 'viewfinder-idle' + (active ? ' hidden' : '');
     const line = document.getElementById('scanLine');
     if (active) setTimeout(() => line.classList.add('visible'), 100);
     else line.classList.remove('visible');
   }
 
-  /* ─── QR Decode Callback ────────────────────────────────────── */
+  /* ─── QR Callbacks ──────────────────────────────────────────── */
   function onScanSuccess(decodedText) {
-    if (processing) return;   // debounce — ignore until backend responds + cooldown
+    if (processing) return;
     processing = true;
-
-    // Pause scan line to signal processing
     document.getElementById('scanLine').style.animationPlayState = 'paused';
-
     showFeedback('info', 'Processing…', 'Validating QR code with server', null, true);
     sendToBackend(decodedText);
   }
 
   function onScanError(err) {
-    // html5-qrcode fires this continuously when no QR is in frame — suppress
-    // Only surface real errors (not "No QR code found")
-    if (err && typeof err === 'string' && err.includes('No QR')) return;
-    if (err && err.message && err.message.includes('No QR')) return;
+    // Suppress continuous "no QR in frame" noise from html5-qrcode
+    if (!err) return;
+    const msg = typeof err === 'string' ? err : (err.message || '');
+    if (msg.toLowerCase().includes('no qr') || msg.toLowerCase().includes('no multi')) return;
   }
 
   /* ─── Backend Communication ─────────────────────────────────── */
-  // google.script.run is injected by Apps Script at runtime.
-  // When testing outside Apps Script (raw browser), it falls back to a mock.
   function sendToBackend(qrData) {
     let payload;
-    try {
-      payload = JSON.parse(qrData);
-    } catch (_) {
-      payload = qrData; // plain string ID fallback
-    }
+    try   { payload = JSON.parse(qrData); }
+    catch (_) { payload = qrData; }
 
     if (typeof google !== 'undefined' && google.script && google.script.run) {
-      // ── Production: Google Apps Script ──
+      // Production: Apps Script
       google.script.run
         .withSuccessHandler(handleServerResponse)
         .withFailureHandler(handleServerError)
-        .logEntry(typeof payload === 'object' ? payload.id : payload);
+        .logEntry(typeof payload === 'object' ? JSON.stringify(payload) : payload);
     } else {
-      // ── Dev mock (browser preview without Apps Script) ──
+      // Dev mock — works when opening the file directly in browser
       setTimeout(() => {
         const mock = [
-          { status: 'success', name: 'Riya Sharma',   action: 'IN',  userId: 'USR_001', time: new Date().toISOString() },
-          { status: 'success', name: 'Arjun Mehta',   action: 'OUT', userId: 'USR_002', time: new Date().toISOString() },
+          { status: 'success', name: 'Riya Sharma',  action: 'IN',  userId: 'USR_001', time: new Date().toISOString() },
+          { status: 'success', name: 'Arjun Mehta',  action: 'OUT', userId: 'USR_002', time: new Date().toISOString() },
           { status: 'error',   message: 'User not found in database' },
         ];
         handleServerResponse(mock[Math.floor(Math.random() * mock.length)]);
@@ -731,38 +710,29 @@
   }
 
   function handleServerResponse(res) {
-    if (!res) {
-      handleServerError('Empty response from server');
-      return;
-    }
+    if (!res) { handleServerError('Empty response from server'); return; }
 
     if (res.status === 'success') {
       const action = (res.action || '').toUpperCase();
       const time   = res.time ? formatTime(res.time) : formatTime(new Date().toISOString());
-
       showFeedback(
         action === 'IN' ? 'in' : 'out',
         action === 'IN' ? '✓ Checked In' : '✓ Checked Out',
         res.name || res.userId,
-        `${res.userId || ''}  •  ${time}`
+        (res.userId || '') + '  •  ' + time
       );
       addLogEntry(res.name || res.userId, action, time, action === 'IN' ? 'in' : 'out');
-
     } else if (res.status === 'duplicate') {
       showFeedback('error', 'Already Scanned', res.message || 'Too soon — please wait a moment', null);
-
     } else {
       showFeedback('error', 'Invalid QR', res.message || 'This QR code is not recognized', null);
     }
-
     scheduleResume();
   }
 
   function handleServerError(err) {
     console.error('Server error:', err);
-    const msg = (typeof err === 'string') ? err
-              : (err && err.message) ? err.message
-              : 'Server connection failed';
+    const msg = typeof err === 'string' ? err : (err && err.message ? err.message : 'Server connection failed');
     showFeedback('error', 'Connection Error', msg, null);
     scheduleResume();
   }
@@ -785,19 +755,15 @@
 
   function showFeedback(state, label, name, meta, isLoading = false) {
     const banner = document.getElementById('feedbackBanner');
-    banner.className = `feedback state-${state}`;
-
+    banner.className = 'feedback state-' + state;
     document.getElementById('feedbackLabel').textContent = label;
     document.getElementById('feedbackName').textContent  = name || '';
     document.getElementById('feedbackMeta').textContent  = meta || '';
-
-    const iconSvg = document.getElementById('feedbackIconSvg');
     if (isLoading) {
-      document.getElementById('feedbackIcon').innerHTML =
-        '<div class="spinner" style="border-top-color:#fff;"></div>';
+      document.getElementById('feedbackIcon').innerHTML = '<div class="spinner" style="border-top-color:#fff;"></div>';
     } else {
       document.getElementById('feedbackIcon').innerHTML =
-        `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[state] || ICONS.info}</svg>`;
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[state] || ICONS.info) + '</svg>';
     }
   }
 
@@ -807,21 +773,16 @@
   function addLogEntry(name, action, time, badgeClass) {
     const empty = document.getElementById('logEmpty');
     if (empty) empty.remove();
-
     logCount++;
     document.getElementById('logCount').textContent = logCount;
-
     const list = document.getElementById('logList');
     const li   = document.createElement('li');
     li.className = 'log-item';
-    li.innerHTML = `
-      <span class="log-item-name">${escHtml(name)}</span>
-      <span class="log-item-time">${escHtml(time)}</span>
-      <span class="badge badge-${escHtml(badgeClass)}">${escHtml(action)}</span>
-    `;
+    li.innerHTML =
+      '<span class="log-item-name">'  + escHtml(name)      + '</span>' +
+      '<span class="log-item-time">'  + escHtml(time)      + '</span>' +
+      '<span class="badge badge-'     + escHtml(badgeClass) + '">' + escHtml(action) + '</span>';
     list.insertBefore(li, list.firstChild);
-
-    // Keep last 50 entries
     while (list.children.length > 50) list.removeChild(list.lastChild);
   }
 
